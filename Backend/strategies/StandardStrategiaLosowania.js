@@ -1,4 +1,4 @@
-const StrategiaLosowania = require("./StrategiaLosowania");
+const StrategiaLosowania = require("./strategiaLosowania");
 
 class StandardStrategiaLosowania extends StrategiaLosowania {
     constructor(items) {

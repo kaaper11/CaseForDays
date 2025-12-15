@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
+const userRoute = require('./routes/userRoute');
+
 
 dotenv.config();
 
@@ -18,6 +20,9 @@ app.get('/', (req, res) => {
     res.send("Działa")
 })
 app.use("/uploads", express.static("uploads"));
+
+
+app.use('/users', userRoute);
 
 
 mongoose.connect(process.env.MONGO_URI, {
