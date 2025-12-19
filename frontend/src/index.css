@@ -2,11 +2,26 @@
 
 input {
   border-radius: 5px;
-  border-bottom: 1px solid #00FFFF;
+  border-bottom: 3px solid #005F78;
   font-size: large;
-  font-weight: bold;
-  color: black;
+  color: white;
 }
+
+select {
+  border-radius: 5px;
+  border-bottom: 3px solid #005F78;
+  font-size: large;
+  color: white;
+  background: #889bba;
+}
+
+h1{
+  color: white;
+  font-size: xxx-large;
+  font-weight: bold;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
 p {
   color: #00FFFF;
   font-weight: bold;
@@ -14,16 +29,36 @@ p {
 }
 
 button {
-  background-color: black;
-  color: gray;
+  background-color: #889bba;
+  border: 3px solid #005F78;
+  color: white;
   cursor: pointer;
   border-radius: 5px;
   font-weight: bold;
+  height: 40px;
+  width: 100px
 }
 
 button:hover {
-  background-color: gray;
+  background-color: #005F78;
   color: white;
+}
+
+nav button {
+  height: 40px;
+  width: 160px;
+  background: #005F78;
+  color: white;
+}
+nav button:hover {
+  background: rgba(0, 95, 120, 0.5);
+  background: rgba(100, 95, 120, 0.5);
+  border-radius: 10px;
+}
+
+:root{
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background: #889bba;
 }
 
 /*:root {*/

@@ -27,7 +27,7 @@ class UserController {
                 return res.status(400).json({message:"Uzupełnij pola pls"});
             }
 
-            const dalej = await this.userService.register({email, password});
+            const dalej = await this.userService.login({email, password});
 
             return res.status(201).json(dalej.token);
 

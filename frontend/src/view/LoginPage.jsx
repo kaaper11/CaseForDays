@@ -1,23 +1,26 @@
 import React, {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const LoginPage = () => {
-    const [nickname, setNickname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [token, setToken] = useState("");
+    const navigate = useNavigate();
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(null);
 
     const handleLogin = async () => {
         try {
-            await axios.post('http://localhost:5000/users/login', {
-                nickname: nickname,
+           const response =  await axios.post('http://localhost:5000/users/login', {
                 email: email,
                 password: password,
             })
+            sessionStorage.setItem("token", response.data.token)
             setSuccess(true);
             setError(null);
+            navigate("/MainPage");
         }catch(err) {
             setError(err.response?.data?.message);
         }

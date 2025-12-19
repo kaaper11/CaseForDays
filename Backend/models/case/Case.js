@@ -1,10 +1,11 @@
 class Case {
-    constructor(id, nazwa, cena, pojemnosc, startegiaLosowania) {
+    constructor(id, nazwa, cena, pojemnosc, startegiaLosowania, zdjecie) {
         this.id = id;
         this.nazwa = nazwa;
         this.cena = cena;
         this.pojemnosc = pojemnosc;
         this.startegiaLosowania = startegiaLosowania;
+        this.zdjecie = zdjecie;
     }
 
     otworzSkrzynke(user){
