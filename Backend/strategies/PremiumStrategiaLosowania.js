@@ -2,8 +2,7 @@ const StrategiaLosowania = require("./strategiaLosowania");
 
 class PremiumStrategiaLosowania extends StrategiaLosowania {
     constructor(items) {
-        super();
-        this.items = items;
+        super(items);
     }
     roll() {
         let liczba = Math.floor(Math.random() * this.items.length)

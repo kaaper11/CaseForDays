@@ -6,6 +6,7 @@ const ItemSchema = new Schema({
     rarity: {type: String, required: true},
     price: {type: Number, required: true},
     image: {type: String, required: true},
+    type: {type: String, required: false},
 
     weaponType: {type: String, required: false},
     startrak: {type: Boolean, required: false},

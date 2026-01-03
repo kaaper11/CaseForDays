@@ -1,8 +1,8 @@
 const Item = require("./Item");
 
 class StickerItem extends Item {
-    constructor(czyHolo, turniej, druzyna, czyZlota, rok) {
-        super();
+    constructor(id, nazwa, poziom_rzadkości, wartość, zdjecie,type, czyHolo, turniej, druzyna, czyZlota, rok) {
+        super(id, nazwa, poziom_rzadkości, wartość, zdjecie,type);
         this.czyHolo = czyHolo;
         this.turniej = turniej;
         this.druzyna = druzyna;

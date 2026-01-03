@@ -1,8 +1,8 @@
 const Case = require("./Case");
 
 class PremiumCase extends Case {
-    constructor(bonus) {
-        super();
+    constructor(id, nazwa, cena, startegiaLosowania, zdjecie, items,bonus = Math.random().toFixed(2)) {
+        super(id, nazwa, cena, startegiaLosowania, zdjecie, items);
         this.bonus = bonus;
     }
 

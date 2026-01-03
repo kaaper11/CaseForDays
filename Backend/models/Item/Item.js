@@ -1,5 +1,5 @@
 class Item{
-    constructor(id, nazwa, poziom_rzadkości, wartość, zdjecie, stan){
+    constructor(id, nazwa, poziom_rzadkości, wartość, zdjecie, type){
         if (this.constructor === Item){
             throw new Error("Klasa abstakcyjna");
         }
@@ -8,6 +8,7 @@ class Item{
         this.poziom_rzadkości = poziom_rzadkości;
         this.wartość = wartość;
         this.zdjecie = zdjecie;
+        this.type = type;
     }
 
     pobierz_cene() {

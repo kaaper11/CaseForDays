@@ -4,6 +4,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 
 const userRoute = require('./routes/userRoute');
+const itemRoute = require('./routes/itemRoute');
+const caseRoute = require('./routes/caseRoute');
 
 
 dotenv.config();
@@ -23,7 +25,8 @@ app.use("/uploads", express.static("uploads"));
 
 
 app.use('/users', userRoute);
-
+app.use('/items', itemRoute);
+app.use('/cases', caseRoute);
 
 mongoose.connect(process.env.MONGO_URI, {
 })

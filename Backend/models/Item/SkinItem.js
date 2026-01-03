@@ -1,8 +1,8 @@
 const Item = require("./Item");
 
 class SkinItem extends Item {
-    constructor(typBroni, startrak, stan) {
-        super();
+    constructor(id, nazwa, poziom_rzadkości, wartość, zdjecie,type, typBroni, startrak, stan) {
+        super(id, nazwa, poziom_rzadkości, wartość, zdjecie,type);
         this.typBroni = typBroni;
         this.startrak = startrak;
         this.stan = stan;
@@ -15,7 +15,7 @@ class SkinItem extends Item {
         }
         if (this.stan === 'Factory new'){
             cena +=200;
-        }else if(this.stan === 'Minima wear'){
+        }else if(this.stan === 'Minimal wear'){
             cena += 100;
         }else if(this.stan === 'Field-Tested'){
             cena += 50;

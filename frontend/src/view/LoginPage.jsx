@@ -17,7 +17,8 @@ const LoginPage = () => {
                 email: email,
                 password: password,
             })
-            sessionStorage.setItem("token", response.data.token)
+            console.log(response.data)
+            sessionStorage.setItem("token", response.data)
             setSuccess(true);
             setError(null);
             navigate("/MainPage");

@@ -1,9 +1,9 @@
 const SkinItem = require("./SkinItem");
 
 class KnifeItem extends SkinItem {
-        constructor() {
-            super();
-            this.pattern = Math.random().toFixed(2);
+        constructor(id, nazwa, poziom_rzadkości, wartość, zdjecie,type, typBroni, startrak, stan, pattern = Math.random().toFixed(2)) {
+            super(id, nazwa, poziom_rzadkości, wartość, zdjecie,type, typBroni, startrak, stan);
+            this.pattern = pattern;
         }
 
         pobierz_cene() {

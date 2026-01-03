@@ -2,8 +2,7 @@ const StrategiaLosowania = require("./strategiaLosowania");
 
 class StandardStrategiaLosowania extends StrategiaLosowania {
     constructor(items) {
-        super();
-        this.items = items;
+        super(items);
     }
 
     roll() {
