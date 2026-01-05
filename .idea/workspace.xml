@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4251ee9e-4c1e-4fb8-b5a0-ccb87ded52b4" name="Changes" comment="Dodanie strony wyświtlania skrzynek pobieranych z bazy, dodanie szkicu strony do otwierania skrzynek." />
+    <list default="true" id="4251ee9e-4c1e-4fb8-b5a0-ccb87ded52b4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -108,24 +108,11 @@
       <workItem from="1767089592721" duration="2176000" />
       <workItem from="1767538598180" duration="277000" />
       <workItem from="1767538891262" duration="227000" />
-      <workItem from="1767539267169" duration="10454000" />
+      <workItem from="1767539267169" duration="10154000" />
     </task>
-    <task id="LOCAL-00001" summary="Dodanie strony wyświtlania skrzynek pobieranych z bazy, dodanie szkicu strony do otwierania skrzynek.">
-      <option name="closed" value="true" />
-      <created>1767613748205</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1767613748205</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Dodanie strony wyświtlania skrzynek pobieranych z bazy, dodanie szkicu strony do otwierania skrzynek." />
-    <option name="LAST_COMMIT_MESSAGE" value="Dodanie strony wyświtlania skrzynek pobieranych z bazy, dodanie szkicu strony do otwierania skrzynek." />
   </component>
 </project>
