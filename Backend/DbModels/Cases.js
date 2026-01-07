@@ -6,7 +6,7 @@ const CaseSchema = new Schema({
     price: {type: Number, required: true},
     type: {type: String, required: true},
     image: {type: String, required: true},
-    items: [{type: Schema.Types.ObjectId, ref: "Items"}],
+    items: [{type: Object, required: true}],
 
     bonus: {type: Number, required: false},
 

@@ -10,5 +10,8 @@ router.post('/addcasestandard', authmiddleware, casCon.addCaseStandard);
 router.post('/addcasepremium', authmiddleware, casCon.addCasePremium);
 router.post('/addcaseevent', authmiddleware, casCon.addCaseEvent);
 
+router.get("/all", authmiddleware, casCon.allCases);
+router.get("/cases/:id", authmiddleware, casCon.oneCase);
+
 
 module.exports = router;

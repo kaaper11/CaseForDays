@@ -35,6 +35,51 @@ class UserController {
             return res.status(500).json({message: "Błąd: " + err});
         }
     }
+
+    premium = async (req, res) => {
+        const user = req.user.userId;
+
+        try {
+            if (!user) {
+                return res.status(400).json({message:'Najpierw się zaloguj!'})
+            }
+            const dalej = await this.userService.premium(user);
+
+            return res.status(201).json(dalej.message);
+        }catch(err){
+            return res.status(500).json({message: "Błąd: " + err});
+        }
+    }
+
+    userData = async (req, res) => {
+        const user = req.user.userId;
+
+        try {
+            if (!user) {
+                return res.status(400).json({message:'Najpierw się zaloguj!'})
+            }
+            const dalej = await this.userService.userData(user);
+            return res.status(201).json(dalej);
+        }catch(err) {
+            return res.status(500).json({message: "Błąd: " + err});
+        }
+    }
+
+    addBalance = async (req, res) => {
+        const { value } = req.body;
+        const user = req.user.userId;
+
+        try {
+            if (!user) {
+                return res.status(400).json({message:'Najpierw się zaloguj!'})
+            }
+            const dalej = await this.userService.addBalance({value, user});
+            return res.status(201).json(dalej.message);
+
+        }catch(err) {
+            return res.status(500).json({message: "Błąd: " + err});
+        }
+    }
 }
 
 module.exports = UserController;

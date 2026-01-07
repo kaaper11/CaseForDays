@@ -15,7 +15,7 @@ select {
   background: #889bba;
 }
 success {
-  color: darkseagreen;
+  color: greenyellow;
   font-weight: bold;
   font-size: x-large;
 }
@@ -47,7 +47,7 @@ button {
   border-radius: 5px;
   font-weight: bold;
   height: 40px;
-  width: 100px
+  width: 125px
 }
 
 button:hover {
