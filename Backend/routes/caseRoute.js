@@ -1,50 +1,19 @@
 const router = require("express").Router();
 const authmiddleware = require("../middlewares/authMiddleware");
-const upload = require("../middlewares/multer");
-
 const CaseController = require("../controllers/CaseController");
 const CaseService = require("../services/CaseService");
+
 
 const casSer = new CaseService();
 const casCon = new CaseController(casSer);
 
-router.post(
-    "/addcasestandard",
-    authmiddleware,
-    upload.single("image"),
-    casCon.addCaseStandard
-);
+router.post("/addcasestandard", authmiddleware, casCon.addCaseStandard);
+router.post("/addcasepremium", authmiddleware, casCon.addCasePremium);
+router.post("/addcaseevent", authmiddleware, casCon.addCaseEvent);
 
-router.post(
-    "/addcasepremium",
-    authmiddleware,
-    upload.single("image"),
-    casCon.addCasePremium
-);
+router.get("/all", casCon.allCases);
+router.get("/:id", casCon.oneCase);
 
-router.post(
-    "/addcaseevent",
-    authmiddleware,
-    upload.single("image"),
-    casCon.addCaseEvent
-);
-
-router.get(
-    "/all",
-    authmiddleware,
-    casCon.allCases
-);
-
-router.get(
-    "/:id",
-    authmiddleware,
-    casCon.getCaseById
-);
-
-router.post(
-    "/:id/open",
-    authmiddleware,
-    casCon.openCase
-);
+router.post("/:id/open", casCon.openCase);
 
 module.exports = router;

@@ -4,144 +4,121 @@ class ItemController {
     }
 
     addItemSkin = async (req, res) => {
+        const { name, rarity, price, image, weaponType, startrak, stan } = req.body;
+
         try {
-            if (!req.body) {
-                return res.status(400).json({ message: "Brak danych formularza" });
+            if (
+                !name ||
+                !rarity ||
+                price === undefined ||
+                !image ||
+                !weaponType ||
+                startrak === undefined ||
+                !stan
+            ) {
+                return res.status(400).json({ message: "Uzupełnij pola pls" });
             }
 
-            const {
-                name,
-                rarity,
-                price,
-                weaponType,
-                startrak,
-                stan
-            } = req.body;
-
-            const image = req.file?.filename;
-
-            if (!name || !rarity || !price || !weaponType || !stan || !image) {
-                return res.status(400).json({ message: "Uzupełnij wszystkie pola" });
-            }
-
-            const result = await this.itemService.addItemSkin({
-                name,
-                rarity,
-                price,
-                weaponType,
-                startrak: startrak === "true",
-                stan,
-                image
-            });
-
-            return res.status(201).json(result);
-
-        } catch (err) {
-            console.error("addItemSkin error:", err);
-            return res.status(500).json({
-                message: "Błąd serwera",
-                error: err.message
-            });
-        }
-    };
-
-    addItemKnife = async (req, res) => {
-        try {
-            if (!req.body) {
-                return res.status(400).json({ message: "Brak danych formularza" });
-            }
-
-            const {
-                name,
-                rarity,
-                price,
-                weaponType,
-                startrak,
-                stan
-            } = req.body;
-
-            const image = req.file?.filename;
-
-            if (!name || !rarity || !price || !weaponType || !stan || !image) {
-                return res.status(400).json({ message: "Uzupełnij wszystkie pola" });
-            }
-
-            const result = await this.itemService.addItemKnife({
-                name,
-                rarity,
-                price,
-                weaponType,
-                startrak: startrak === "true",
-                stan,
-                image
-            });
-
-            return res.status(201).json(result);
-
-        } catch (err) {
-            console.error("addItemKnife error:", err);
-            return res.status(500).json({
-                message: "Błąd serwera",
-                error: err.message
-            });
-        }
-    };
-
-    addItemSticker = async (req, res) => {
-        try {
-            if (!req.body) {
-                return res.status(400).json({ message: "Brak danych formularza" });
-            }
-
-            const {
-                name,
-                rarity,
-                price,
-                czyHolo,
-                turniej,
-                druzyna,
-                czyZlota,
-                rok
-            } = req.body;
-
-            const image = req.file?.filename;
-
-            if (!name || !rarity || !price || !turniej || !druzyna || !rok || !image) {
-                return res.status(400).json({ message: "Uzupełnij wszystkie pola" });
-            }
-
-            const result = await this.itemService.addItemSticker({
+            const dalej = await this.itemService.addItemSkin({
                 name,
                 rarity,
                 price,
                 image,
-                czyHolo: czyHolo === "true",
+                weaponType,
+                startrak,
+                stan,
+            });
+
+            return res.status(200).json({ message: dalej.message });
+        } catch (err) {
+            return res.status(500).json({ message: "Błąd: " + err });
+        }
+    };
+
+    addItemKnife = async (req, res) => {
+        const { name, rarity, price, image, weaponType, startrak, stan } = req.body;
+
+        try {
+            if (
+                !name ||
+                !rarity ||
+                price === undefined ||
+                !image ||
+                !weaponType ||
+                startrak === undefined ||
+                !stan
+            ) {
+                return res.status(400).json({ message: "Uzupełnij pola pls" });
+            }
+
+            const dalej = await this.itemService.addItemKnife({
+                name,
+                rarity,
+                price,
+                image,
+                weaponType,
+                startrak,
+                stan,
+            });
+
+            return res.status(200).json({ message: dalej.message });
+        } catch (err) {
+            return res.status(500).json({ message: "Błąd: " + err });
+        }
+    };
+
+    addItemSticker = async (req, res) => {
+        const {
+            name,
+            rarity,
+            price,
+            image,
+            czyHolo,
+            turniej,
+            druzyna,
+            czyZlota,
+            rok,
+        } = req.body;
+
+        try {
+            if (
+                !name ||
+                !rarity ||
+                price === undefined ||
+                !image ||
+                czyHolo === undefined ||
+                !turniej ||
+                !druzyna ||
+                czyZlota === undefined ||
+                rok === undefined
+            ) {
+                return res.status(400).json({ message: "Uzupełnij pola pls" });
+            }
+
+            const dalej = await this.itemService.addItemSticker({
+                name,
+                rarity,
+                price,
+                image,
+                czyHolo,
                 turniej,
                 druzyna,
-                czyZlota: czyZlota === "true",
-                rok
+                czyZlota,
+                rok,
             });
 
-            return res.status(201).json(result);
-
+            return res.status(200).json({ message: "Przedmiot został dodany!" });
         } catch (err) {
-            console.error("addItemSticker error:", err);
-            return res.status(500).json({
-                message: "Błąd serwera",
-                error: err.message
-            });
+            return res.status(500).json({ message: "Błąd: " + err });
         }
     };
 
     allItems = async (req, res) => {
         try {
-            const items = await this.itemService.allItems();
-            return res.status(200).json(items);
+            const dalej = await this.itemService.allItems();
+            return res.status(200).json(dalej);
         } catch (err) {
-            return res.status(500).json({
-                message: "Błąd serwera",
-                error: err.message
-            });
+            return res.status(500).json({ message: "Błąd: " + err });
         }
     };
 }

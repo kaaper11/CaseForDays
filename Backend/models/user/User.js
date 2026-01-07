@@ -12,6 +12,7 @@ class User {
     }
 
     dodajBalans(balancePlus) {
+        // console.log(balancePlus);
         this.balance += balancePlus;
     }
 

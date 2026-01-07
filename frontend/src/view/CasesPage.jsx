@@ -44,15 +44,16 @@ const CasesPage = () => {
             <div className="grid grid-cols-4 gap-8">
                 {cases.map((c) => (
                     <Link
-                        key={c._id}
-                        to={`/cases/${c._id}`}
+                        key={c.id}
+                        to={`/cases/${c.id}`}
                         className="w-64 p-5 border-3 border-cyan-800 rounded-lg shadow-xl flex flex-col items-center gap-4 cursor-pointer hover:scale-105 hover:shadow-2xl transition"
                     >
-                        <img
-                            src={`http://localhost:5000/uploads/${c.image}`}
+
+                        <img src={c.image.split('\\').pop()}
+
                             alt={c.name}
                             className="w-40 h-40 object-cover"
-                        />
+                            />
 
                         <h2 className="text-xl font-bold text-white">
                             {c.name}

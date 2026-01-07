@@ -1,24 +1,24 @@
 const mongoose = require("mongoose");
-const {Schema} = require("mongoose");
+const { Schema } = mongoose;
 
 const ItemSchema = new Schema({
-    name: {type: String, required: true},
-    rarity: {type: String, required: true},
-    price: {type: Number, required: true},
-    image: {type: String, required: true},
-    type: {type: String, required: false},
+    name: { type: String, required: true },
+    rarity: { type: String, required: true },
+    price: { type: Number, required: true },
+    image: { type: String, required: true },
+    type: { type: String, required: true },
 
-    weaponType: {type: String, required: false},
-    startrak: {type: Boolean, required: false},
-    stan : {type: String, required: false},
+    weaponType: String,
+    startrak: { type: Boolean, default: false },
+    stan: String,
 
-    pattern: {type: Number, required: false},
+    pattern: Number,
 
-    czyHolo: {type: Boolean, required: false},
-    turniej: {type: String, required: false},
-    druzyna: {type: String, required: false},
-    czyZlota: {type: Boolean, required: false},
-    rok: {type: Number, required: false},
-})
+    czyHolo: { type: Boolean, default: false },
+    turniej: String,
+    druzyna: String,
+    czyZlota: { type: Boolean, default: false },
+    rok: Number,
+});
 
-module.exports = mongoose.model("Items", ItemSchema, "items");
+module.exports = mongoose.model("Items", ItemSchema);

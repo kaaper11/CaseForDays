@@ -10,10 +10,15 @@ import AddCasePage from "./view/AddCasePage.jsx";
 import AddItemPage from "./view/AddItemPage.jsx";
 import CasesPage from "./view/CasesPage.jsx";
 import OpenCasePage from "./view/OpenCasePage.jsx";
+import PremiumPage from "./view/PremiumPage.jsx";
+import ProfilePage from "./view/ProfilePage.jsx";
+import AddBalancePage from "./view/AddBalancePage.jsx";
+import PaymentSimulationPage from "./view/PaymentSimulationPage.jsx";
+import SearchPage from "./view/SearchPage.jsx";
 
 function Lay() {
     const location = useLocation();
-    const hide = ["/", "/RegisterPage"];
+    const hide = ["/", "/RegisterPage", "/registerPage"];
     const navHide = hide.includes(location.pathname);
 
     return (
@@ -27,6 +32,11 @@ function Lay() {
                 <Route path="/AddItemPage" element={<AddItemPage />} />
                 <Route path="/cases" element={<CasesPage />} />
                 <Route path="/cases/:id" element={<OpenCasePage />} />
+                <Route path="/PremiumPage" element={<PremiumPage />} />
+                <Route path="/ProfilePage" element={<ProfilePage />} />
+                <Route path="/AddBalancePage" element={<AddBalancePage />} />
+                <Route path="/PaymentSimulationPage" element={<PaymentSimulationPage />} />
+                <Route path="/SearchPage" element={<SearchPage />} />
             </Routes>
         </div>
     );

@@ -12,3 +12,5 @@ class PremiumStrategiaLosowania extends StrategiaLosowania {
         return this.items[(Math.floor(Math.random() * this.items.length))+1];
     }
 }
+
+module.exports = PremiumStrategiaLosowania;

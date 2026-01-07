@@ -6,7 +6,7 @@
 }
 
 .reel-wrapper {
-    width: 640px;
+    width: 960px;
     height: 200px;
     overflow: hidden;
     border: 3px solid #00bfff;
@@ -26,7 +26,8 @@
     height: 160px;
     margin: 0 5px;
     background: #2b2b2b;
-    border-radius: 8px;
+    border-radius: 10px;
+    border: 3px solid #555;
 
     display: flex;
     flex-direction: column;
@@ -34,6 +35,7 @@
     justify-content: center;
 
     color: white;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .reel-item img {
@@ -42,8 +44,101 @@
     object-fit: contain;
 }
 
+.center-marker {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 100%;
+    background: gold;
+    z-index: 10;
+    box-shadow: 0 0 12px gold;
+    pointer-events: none;
+}
+
 .winner {
     font-size: 22px;
-    color: #00ffcc;
+    color: white;
     font-weight: bold;
+}
+
+.case-items {
+    margin-top: 30px;
+    width: 90%;
+    max-width: 900px;
+    text-align: center;
+}
+
+.case-items h3 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.case-items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+
+.case-item-card {
+    background: #222;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    border: 3px solid #555;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.case-item-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.case-item-card:hover {
+    transform: scale(1.05);
+}
+
+
+.case-title {
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.case-items-title {
+    color: white;
+}
+
+.rarity-blue {
+    border: 2px solid #4aa3ff;
+    box-shadow: 0 0 8px #4aa3ff;
+}
+
+.rarity-purple {
+    border: 2px solid #a855f7;
+    box-shadow: 0 0 8px #a855f7;
+}
+
+.rarity-pink {
+    border: 2px solid #ec4899;
+    box-shadow: 0 0 8px #ec4899;
+}
+
+.rarity-red {
+    border: 2px solid #ef4444;
+    box-shadow: 0 0 8px #ef4444;
+}
+
+.rarity-gold {
+    border: 2px solid gold;
+    box-shadow: 0 0 12px gold;
 }

@@ -6,3 +6,5 @@ class EventCase extends Case {
         this.event = event;
     }
 }
+
+module.exports = EventCase;

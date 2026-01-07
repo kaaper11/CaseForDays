@@ -1,152 +1,59 @@
-const mongoose = require("mongoose");
-
 class CaseController {
     constructor(caseService) {
         this.caseService = caseService;
     }
 
     addCaseStandard = async (req, res) => {
+        const { name, price, type, image, items } = req.body;
+
         try {
-            const { name, price, type, items } = req.body;
-            const image = req.file?.filename;
+           if (!name || !price || !type || !image || !items) {
+               return res.status(400).json({message:"Uzupełnij pola pls"});
+           }
+           const dalej = await this.caseService.addCaseStandard({name, price, type, image, items});
 
-            const parsedItems =
-                typeof items === "string" ? JSON.parse(items) : items;
-
-            if (
-                !name ||
-                !price ||
-                !type ||
-                !image ||
-                !parsedItems ||
-                !parsedItems.length
-            ) {
-                return res.status(400).json({
-                    message: "Uzupełnij wszystkie pola"
-                });
-            }
-
-
-            const itemIds = parsedItems.map(id =>
-                new mongoose.Types.ObjectId(id)
-            );
-
-            const result = await this.caseService.addCaseStandard({
-                name,
-                price,
-                type,
-                image,
-                items: itemIds
-            });
-
-            return res.status(201).json(result);
-
-        } catch (err) {
-            console.error("ADD CASE STANDARD ERROR:", err);
-            return res.status(500).json({
-                message: "Błąd serwera",
-                error: err.message
-            });
+            return res.status(200).json({ message: dalej.message });
+        }catch(err){
+            return res.status(500).json({message: 'Błąd: ' + err});
         }
-    };
+    }
 
     addCasePremium = async (req, res) => {
+        const { name, price, type, image, items, bonus } = req.body;
+
         try {
-            const { name, price, type, items, bonus } = req.body;
-            const image = req.file?.filename;
-
-            const parsedItems =
-                typeof items === "string" ? JSON.parse(items) : items;
-
-            if (
-                !name ||
-                !price ||
-                !type ||
-                !image ||
-                !parsedItems ||
-                !parsedItems.length ||
-                !bonus
-            ) {
-                return res.status(400).json({
-                    message: "Uzupełnij wszystkie pola"
-                });
+            if (!name || !price || !type || !image || !items || !bonus) {
+                return res.status(400).json({message:"Uzupełnij pola pls"});
             }
-
-            const itemIds = parsedItems.map(item =>
-                new mongoose.Types.ObjectId(item._id)
-            );
-
-            const result = await this.caseService.addCasePremium({
-                name,
-                price,
-                type,
-                image,
-                items: itemIds,
-                bonus
-            });
-
-            return res.status(201).json(result);
-
-        } catch (err) {
-            console.error("ADD CASE PREMIUM ERROR:", err);
-            return res.status(500).json({
-                message: "Błąd serwera",
-                error: err.message
-            });
+            const dalej = await this.caseService.addCasePremium({name, price, type, image, items, bonus});
+            return res.status(200).json({ message: dalej.message });
+        }catch(err){
+            return res.status(500).json({message: 'Błąd: ' + err});
         }
-    };
+    }
 
     addCaseEvent = async (req, res) => {
+        const { name, price, type, image, items, event } = req.body;
+
         try {
-            const { name, price, type, items, event } = req.body;
-            const image = req.file?.filename;
+            if (!name || !price || !type || !image || !items || !event) {
 
-            const parsedItems =
-                typeof items === "string" ? JSON.parse(items) : items;
-
-            if (
-                !name ||
-                !price ||
-                !type ||
-                !image ||
-                !parsedItems ||
-                !parsedItems.length ||
-                !event
-            ) {
-                return res.status(400).json({
-                    message: "Uzupełnij wszystkie pola"
-                });
+                return res.status(400).json({message:"Uzupełnij pola pls"});
             }
 
-            const itemIds = parsedItems.map(item =>
-                new mongoose.Types.ObjectId(item._id)
-            );
-
-            const result = await this.caseService.addCaseEvent({
-                name,
-                price,
-                type,
-                image,
-                items: itemIds,
-                event
-            });
-
-            return res.status(201).json(result);
-
-        } catch (err) {
-            console.error("ADD CASE EVENT ERROR:", err);
-            return res.status(500).json({
-                message: "Błąd serwera",
-                error: err.message
-            });
+            const dalej = await this.caseService.addCaseEvent({name, price, type, image, items, event});
+            return res.status(200).json({ message: dalej.message });
+        }catch(err){
+            return res.status(500).json({message: 'Błąd: ' + err});
         }
-    };
+    }
 
     allCases = async (req, res) => {
         try {
             const cases = await this.caseService.allCases();
             return res.status(200).json(cases);
         } catch (err) {
+            console.log(err);
             return res.status(500).json({
                 message: "Błąd pobierania skrzynek",
                 error: err.message
@@ -154,11 +61,11 @@ class CaseController {
         }
     };
 
-    getCaseById = async (req, res) => {
+    oneCase = async (req, res) => {
         try {
             const { id } = req.params;
 
-            const oneCase = await this.caseService.getCaseById(id);
+            const oneCase = await this.caseService.oneCase(id);
 
             if (!oneCase) {
                 return res.status(404).json({ message: "Skrzynka nie istnieje" });
@@ -172,24 +79,42 @@ class CaseController {
                 error: err.message
             });
         }
-    };
+    }
 
     openCase = async (req, res) => {
         try {
             const { id } = req.params;
 
-            const result = await this.caseService.openCase(id);
+            const caseData = await this.caseService.oneCase(id);
 
-            return res.status(200).json(result);
+            if (!caseData) {
+                return res.status(404).json({ message: "Skrzynka nie istnieje" });
+            }
+
+            const items = caseData.items;
+
+            if (!items || items.length === 0) {
+                return res.status(400).json({ message: "Skrzynka nie ma przedmiotów" });
+            }
+
+            const randomIndex = Math.floor(Math.random() * items.length);
+            const wonItem = items[randomIndex];
+
+            return res.status(200).json({
+                items,
+                wonItem
+            });
 
         } catch (err) {
-            console.error("OPEN CASE CONTROLLER ERROR:", err);
+            console.error(err);
             return res.status(500).json({
                 message: "Błąd otwierania skrzynki",
                 error: err.message
             });
         }
     };
+
+
 }
 
 module.exports = CaseController;

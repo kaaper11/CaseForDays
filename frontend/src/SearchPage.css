@@ -1,0 +1,152 @@
+/* =========================
+   TŁO STRONY
+========================= */
+
+.page-wrapper {
+  min-height: 100vh;
+  background: #8fa3c1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 90px; /* miejsce na navbar */
+  box-sizing: border-box;
+}
+
+/* =========================
+   KONTENER + TYTUŁ
+========================= */
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.search-title {
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* =========================
+   RAMKA (PANEL)
+========================= */
+
+.panel {
+  width: 650px;          
+  padding: 30px 35px;  
+  background: #8fa3c1;
+  border: 3px solid #005f73;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+
+/* =========================
+   PRZEŁĄCZNIK
+========================= */
+
+.mode-switch {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 35px;
+}
+
+.mode-switch button {
+  width: 140px;              /* 🔑 KLUCZ */
+  height: 44px;
+  display: flex;             /* 🔑 */
+  align-items: center;       /* 🔑 */
+  justify-content: center;   /* 🔑 */
+
+  border-radius: 8px;
+  border: 3px solid #005f73;
+  background: transparent;
+  color: white;
+
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mode-switch button.active,
+.mode-switch button:hover {
+  background: #005f73;
+}
+
+/* =========================
+   INPUTY / SELECTY
+========================= */
+
+.form-group {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group input,
+.form-group select {
+  width: 55%;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid #005f73;
+  padding: 10px;
+  font-size: 16px;
+  color: white;
+  outline: none;
+  text-align: center;
+}
+
+.form-group input::placeholder {
+  color: #e0e0e0;
+}
+
+.form-group select option {
+  color: black;
+}
+
+/* =========================
+   WYNIKI
+========================= */
+
+.results {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.result-card {
+  border: 2px solid #005f73;
+  border-radius: 8px;
+  padding: 15px 20px;
+  color: white;
+  background: rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.result-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.result-card strong {
+  font-size: 18px;
+}
+
+/* =========================
+   BRAK WYNIKÓW (opcjonalne)
+========================= */
+
+.no-results {
+  text-align: center;
+  color: white;
+  margin-top: 30px;
+  font-size: 18px;
+  opacity: 0.9;
+}
