@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { filterItems, filterCases } from "./filterUtils";
 import "./SearchPage.css";
+import { useNavigate } from "react-router-dom";
 
 /* ===== DANE TESTOWE ===== */
 
@@ -36,19 +37,24 @@ const cases = [
     id: 1,
     name: "Prisma Case",
     price: 15,
-    series: "Prisma"
+    series: "Prisma",
+    caseType: "Standardowa",
+    image: "/images/prisma.jpg"
   },
   {
     id: 2,
     name: "Danger Zone Case",
     price: 20,
-    series: "Danger Zone"
+    series: "Danger Zone",
+     caseType: "Premium",
+    image: "/images/dangerzone.png"
   }
 ];
 
 /* ===== KOMPONENT ===== */
 
 const SearchPage = () => {
+  const navigate = useNavigate();
   const [mode, setMode] = useState("cases");
 
   const [filters, setFilters] = useState({
@@ -205,16 +211,27 @@ const SearchPage = () => {
               </div>
             )}
 
-            {results.map(el => (
-              <div key={el.id} className="result-card">
-                <strong>{el.name}</strong>
-                <div>Cena: {el.price} zł</div>
-                {"rarity" in el && <div>Rzadkość: {el.rarity}</div>}
-                {"type" in el && <div>Typ: {el.type}</div>}
-                {"condition" in el && <div>Stan: {el.condition}</div>}
-                {"series" in el && <div>Typ skrzynki: {el.series}</div>}
-              </div>
-            ))}
+          {results.map(el => (
+  <div
+    key={el.id}
+    className="result-card clickable"
+    onClick={() => {
+      if ("series" in el) {
+        navigate(`/case/${el.id}` , { state: el });
+      } else {
+        navigate(`/item/${el.id}` , { state: el });
+      }
+    }}
+  >
+    <strong>{el.name}</strong>
+    <div>Cena: {el.price} zł</div>
+    {"rarity" in el && <div>Rzadkość: {el.rarity}</div>}
+    {"type" in el && <div>Typ: {el.type}</div>}
+    {"condition" in el && <div>Stan: {el.condition}</div>}
+    {"series" in el && <div>Typ skrzynki: {el.series}</div>}
+  </div>
+))}
+                
           </div>
         </div>
       </div>

@@ -6,7 +6,9 @@ const Navbar = () => {
         <div>
             <nav className={'flex justify-between bg-cyan-800 h-15 w-full '}>
                 <div className={'flex flex-row px-10 gap-10 items-center'}>
-                    <a onClick={() => navigate('/MainPage')} className={'font-bold text-white text-xl cursor-pointer'}>CFD</a>
+                    <a onClick={() => navigate('/MainPage')} className={'font-bold text-white text-xl cursor-pointer'}>
+                        <img src="/logo.png" alt="CaseForDays" className="h-10 select-none"/>
+                    </a>
                     <button>
                         Skrzynki
                     </button>

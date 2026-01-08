@@ -9,6 +9,21 @@ import NavBar from "./view/Navbar.jsx";
 import AddCasePage from "./view/AddCasePage.jsx";
 import AddItemPage from "./view/AddItemPage.jsx";
 import SearchPage from "./view/SearchPage.jsx";
+import CaseDetails from "./view/CaseDetails.jsx";
+import ItemDetails from "./view/ItemDetails.jsx";
+import TopSkins from "./view/Topskins.jsx";
+
+function Apps() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SearchPage />} />
+        <Route path="/case/:id" element={<CaseDetails />} />
+        <Route path="/item/:id" element={<ItemDetails />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
 function Lay() {
     const location = useLocation();

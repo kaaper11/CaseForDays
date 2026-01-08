@@ -1,0 +1,114 @@
+/* ===== HERO SECTION ===== */
+
+.hero {
+  height: calc(100vh - 60px);
+  background:
+    linear-gradient(
+      to right,
+      rgba(8, 15, 22, 0.95),
+      rgba(8, 15, 22, 0.65)
+    ),
+    url("/hero-bg.png");
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+
+  padding-left: 90px;
+  box-sizing: border-box;
+}
+
+/* ===== CONTENT ===== */
+
+.hero-content {
+  max-width: 520px;
+  color: #ffffff;
+}
+
+/* ===== TITLE ===== */
+
+.hero-content h1 {
+  font-size: 52px;
+  line-height: 1.1;
+  margin-bottom: 18px;
+  font-weight: 800;
+}
+
+.hero-content h1 span {
+  color: #f5c400;
+}
+
+/* ===== DESCRIPTION ===== */
+
+.hero-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.88;
+  margin-bottom: 34px;
+}
+
+/* ===== CTA BUTTON ===== */
+
+.hero-button {
+  background: #f5c400;
+  color: #111;
+  border: none;
+  border-radius: 10px;
+
+  padding: 14px 30px;
+  min-width: 170px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+
+  box-shadow: 0 8px 22px rgba(245, 196, 0, 0.35);
+  transition: all 0.2s ease;
+}
+
+/* Text inside button */
+
+.hero-button .cta-title {
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.hero-button .cta-subtitle {
+  font-size: 12px;
+  margin-top: 2px;
+  opacity: 0.85;
+}
+
+/* Hover & Active */
+
+.hero-button:hover {
+  background: #ffd633;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(245, 196, 0, 0.45);
+}
+
+.hero-button:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(245, 196, 0, 0.35);
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+  .hero {
+    padding-left: 30px;
+    padding-right: 30px;
+    background-position: center;
+  }
+
+  .hero-content h1 {
+    font-size: 38px;
+  }
+}
