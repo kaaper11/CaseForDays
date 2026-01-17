@@ -1,6 +1,4 @@
-/* =========================
-   TŁO STRONY
-========================= */
+
 
 .page-wrapper {
   min-height: 100vh;
@@ -8,13 +6,10 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 90px; /* miejsce na navbar */
+  padding-top: 90px;
   box-sizing: border-box;
 }
 
-/* =========================
-   KONTENER + TYTUŁ
-========================= */
 
 .search-container {
   display: flex;
@@ -30,9 +25,6 @@
   margin-bottom: 30px;
 }
 
-/* =========================
-   RAMKA (PANEL)
-========================= */
 
 .panel {
   width: 650px;          
@@ -44,10 +36,6 @@
   box-sizing: border-box;
 }
 
-/* =========================
-   PRZEŁĄCZNIK
-========================= */
-
 .mode-switch {
   display: flex;
   justify-content: center;
@@ -56,12 +44,11 @@
 }
 
 .mode-switch button {
-  width: 140px;              /* 🔑 KLUCZ */
+  width: 140px;
   height: 44px;
-  display: flex;             /* 🔑 */
-  align-items: center;       /* 🔑 */
-  justify-content: center;   /* 🔑 */
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
   border: 3px solid #005f73;
   background: transparent;
@@ -77,10 +64,6 @@
 .mode-switch button:hover {
   background: #005f73;
 }
-
-/* =========================
-   INPUTY / SELECTY
-========================= */
 
 .form-group {
   margin-bottom: 30px;
@@ -110,9 +93,6 @@
   color: black;
 }
 
-/* =========================
-   WYNIKI
-========================= */
 
 .results {
   margin-top: 40px;
@@ -139,9 +119,7 @@
   font-size: 18px;
 }
 
-/* =========================
-   BRAK WYNIKÓW (opcjonalne)
-========================= */
+
 
 .no-results {
   text-align: center;

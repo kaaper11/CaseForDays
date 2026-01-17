@@ -34,64 +34,99 @@ const OpenCasePage = () => {
     const wrapperRef = useRef(null);
 
     useEffect(() => {
+        if (!id) return;
+
         const fetchCase = async () => {
-            const res = await axios.get(`http://localhost:5000/cases/${id}`);
-            setCaseName(res.data.name);
-            setCaseItems(res.data.items);
+            try {
+                const res = await axios.get(
+                    `http://localhost:5000/cases/${id}`
+                );
 
-            const initialReel = Array(REEL_REPEAT)
-                .fill(res.data.items)
-                .flat();
+                const validItems = (res.data.items || []).filter(
+                    item => item && item._id && item.rarity
+                );
 
-            setItems(initialReel);
+                setCaseName(res.data.name);
+                setCaseItems(validItems);
+
+                const initialReel = Array.from(
+                    { length: REEL_REPEAT },
+                    () => [...validItems]
+                ).flat();
+
+                setItems(initialReel);
+            } catch (err) {
+                console.error("Błąd pobierania skrzynki:", err);
+            }
         };
 
         fetchCase();
     }, [id]);
 
     const openCase = async () => {
-        if (spinning) return;
+        if (!id || spinning) return;
 
         setSpinning(true);
         setWinner(null);
 
-        const res = await axios.post(
-            `http://localhost:5000/cases/${id}/open`,
-            {},
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
+        try {
+            const res = await axios.post(
+                `http://localhost:5000/cases/${id}/open`,
+                {},
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
 
-        const { items: dbItems, wonItem } = res.data;
+            const { items: dbItems, wonItem } = res.data;
 
-        const repeated = Array(REEL_REPEAT).fill(dbItems).flat();
-        const baseIndex = Math.floor(repeated.length / 2);
-        const winIndex = baseIndex + Math.floor(Math.random() * dbItems.length);
+            if (!wonItem) {
+                console.error("wonItem jest null", res.data);
+                setSpinning(false);
+                return;
+            }
 
-        repeated[winIndex] = wonItem;
-        setItems(repeated);
+            const cleanItems = (dbItems || []).filter(
+                item => item && item._id && item.rarity
+            );
 
-        requestAnimationFrame(() => {
-            const reel = reelRef.current;
-            const wrapper = wrapperRef.current;
-            if (!reel || !wrapper) return;
+            const repeated = Array.from(
+                { length: REEL_REPEAT },
+                () => [...cleanItems]
+            ).flat();
 
-            reel.style.transition = "none";
-            reel.style.transform = "translateX(0)";
+            const baseIndex = Math.floor(repeated.length / 2);
+            const winIndex =
+                baseIndex + Math.floor(Math.random() * cleanItems.length);
 
-            const offset =
-                winIndex * ITEM_FULL_WIDTH -
-                (wrapper.offsetWidth / 2 - ITEM_WIDTH / 2);
+            repeated[winIndex] = wonItem;
+            setItems(repeated);
 
             requestAnimationFrame(() => {
-                reel.style.transition = `transform ${ANIMATION_TIME}ms cubic-bezier(0.08, 0.82, 0.17, 1)`;
-                reel.style.transform = `translateX(-${offset}px)`;
-            });
-        });
+                const reel = reelRef.current;
+                const wrapper = wrapperRef.current;
+                if (!reel || !wrapper) return;
 
-        setTimeout(() => {
-            setWinner(wonItem);
+                reel.style.transition = "none";
+                reel.style.transform = "translateX(0)";
+
+                const offset =
+                    winIndex * ITEM_FULL_WIDTH -
+                    (wrapper.offsetWidth / 2 - ITEM_WIDTH / 2);
+
+                requestAnimationFrame(() => {
+                    reel.style.transition =
+                        `transform ${ANIMATION_TIME}ms cubic-bezier(0.08, 0.82, 0.17, 1)`;
+                    reel.style.transform = `translateX(-${offset}px)`;
+                });
+            });
+
+            setTimeout(() => {
+                setWinner(wonItem);
+                setSpinning(false);
+            }, ANIMATION_TIME);
+        } catch (err) {
+            console.error("Błąd otwierania skrzynki:", err);
             setSpinning(false);
-        }, ANIMATION_TIME);
+        }
     };
 
     return (
@@ -119,7 +154,7 @@ const OpenCasePage = () => {
 
             {winner && (
                 <div className="winner">
-                    Wygrałeś: {winner.name}
+                    Wygrałeś: <strong>{winner.name}</strong>
                 </div>
             )}
 
@@ -128,7 +163,7 @@ const OpenCasePage = () => {
                     Możliwe skiny w tej skrzynce
                 </h3>
                 <div className="case-items-grid">
-                    {caseItems.map((item) => (
+                    {caseItems.map(item => (
                         <div
                             key={item._id}
                             className={`case-item-card ${rarityClass(item.rarity)}`}

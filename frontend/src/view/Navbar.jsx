@@ -31,7 +31,7 @@ const Navbar = () => {
 
     useEffect(() => {
         fetchUser();
-    }, []); // OK – token jest w storage
+    }, []);
 
     return (
         <nav className="flex justify-between bg-cyan-800 h-15 w-full">
@@ -41,7 +41,7 @@ const Navbar = () => {
                 </button>
 
                 <button onClick={() => navigate("/cases")}>Skrzynki</button>
-                <button>Promocje</button>
+                <button onClick={() => navigate("/EventCasePage")}>Sezonowe</button>
                 <button onClick={() => navigate("/PremiumPage")}>Premium</button>
                 <button onClick={() => navigate("/AddCasePage")}>Dodaj Skrzynkę</button>
                 <button onClick={() => navigate("/AddItemPage")}>Dodaj Przedmiot</button>

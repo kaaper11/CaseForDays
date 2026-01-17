@@ -1,246 +1,174 @@
 const DbCases = require("../DbModels/Cases");
+const DbItems = require("../DbModels/Items");
+
 const Case = require("../models/case/Case");
 const EventCase = require("../models/case/EventCase");
 const PremiumCase = require("../models/case/PremiumCase");
-const SL = require('../strategies/StandardStrategiaLosowania');
-const PSL = require('../strategies/PremiumStrategiaLosowania');
-const cosa = require("../models/case/PremiumCase");
 
+const SL = require("../strategies/StandardStrategiaLosowania");
+const PSL = require("../strategies/PremiumStrategiaLosowania");
 
 class CaseService {
 
-    async addCaseStandard(data){
-        const { name, price, type, image, items } = data;
 
-        const one = await DbCases.findOne({name: name});
-        if(one){
-            throw new Error('Skrzynka o takiej nazwie już istnieje!')
+    async resolveItems(items) {
+        if (!items || items.length === 0) return [];
+
+        if (typeof items[0] === "object") {
+            return items;
         }
 
-           const newCase = new Case(
-                null,
-                name,
-                price,
-                new SL(items),
-                image,
-                items,
-            )
-
-           const newDbItem = new DbCases({
-               name: newCase.nazwa,
-               price: newCase.cena,
-               type: type,
-               image: newCase.zdjecie,
-               items: newCase.items,
-           })
-
-        newDbItem.save();
-
-        return {message: 'Skrzynka została dodana!'}
+        return await DbItems.find({
+            _id: { $in: items }
+        });
     }
 
-    async addCasePremium(data){
+    async addCaseStandard(data) {
+        const { name, price, type, image, items } = data;
+
+        if (await DbCases.findOne({ name })) {
+            throw new Error("Skrzynka o takiej nazwie już istnieje!");
+        }
+
+        const itemObjects = await this.resolveItems(items);
+
+        if (itemObjects.length === 0) {
+            throw new Error("Nie znaleziono itemów");
+        }
+
+        const newCase = new Case(
+            null,
+            name,
+            price,
+            new SL(itemObjects),
+            image,
+            itemObjects
+        );
+
+        const newDbCase = new DbCases({
+            name: newCase.nazwa,
+            price: newCase.cena,
+            type,
+            image: newCase.zdjecie,
+            items: newCase.items
+        });
+
+        await newDbCase.save();
+        return { message: "Skrzynka standardowa dodana" };
+    }
+
+
+    async addCasePremium(data) {
         const { name, price, type, image, items, bonus } = data;
 
-        const one = await DbCases.findOne({name: name});
-        if(one){
-            throw new Error('Skrzynka o takiej nazwie już istnieje!')
+        if (await DbCases.findOne({ name })) {
+            throw new Error("Skrzynka o takiej nazwie już istnieje!");
+        }
+
+        const itemObjects = await this.resolveItems(items);
+
+        if (itemObjects.length === 0) {
+            throw new Error("Nie znaleziono itemów");
         }
 
         const newCase = new PremiumCase(
             null,
             name,
             price,
-            new PSL(items),
+            new PSL(itemObjects),
             image,
-            items,
+            itemObjects,
             bonus
-        )
+        );
 
-        const newDbItem = new DbCases({
+        const newDbCase = new DbCases({
             name: newCase.nazwa,
             price: newCase.cena,
-            type: type,
+            type,
             image: newCase.zdjecie,
             items: newCase.items,
             bonus: newCase.bonus
-        })
+        });
 
-        newDbItem.save();
-
-        return {message: 'Skrzynka została dodana!'}
+        await newDbCase.save();
+        return { message: "Skrzynka premium dodana" };
     }
 
-    async addCaseEvent(data){
+    async addCaseEvent(data) {
         const { name, price, type, image, items, event } = data;
 
-        const one = await DbCases.findOne({name: name});
-        if(one){
-            throw new Error('Skrzynka o takiej nazwie już istnieje!')
+        if (await DbCases.findOne({ name })) {
+            throw new Error("Skrzynka o takiej nazwie już istnieje!");
+        }
+
+        const itemObjects = await this.resolveItems(items);
+
+        if (itemObjects.length === 0) {
+            throw new Error("Nie znaleziono itemów");
         }
 
         const newCase = new EventCase(
             null,
             name,
             price,
-            new SL(items),
+            new SL(itemObjects),
             image,
-            items,
+            itemObjects,
             event
-        )
+        );
 
-        const newDbItem = new DbCases({
+        const newDbCase = new DbCases({
             name: newCase.nazwa,
             price: newCase.cena,
-            type: type,
+            type,
             image: newCase.zdjecie,
             items: newCase.items,
             event: newCase.event
-        })
+        });
 
-        newDbItem.save();
-
-        return {message: 'Skrzynka została dodana!'}
+        await newDbCase.save();
+        return { message: "Skrzynka eventowa dodana" };
     }
 
-    async allCases(){
+    async allCases() {
         const cases = await DbCases.find({});
 
-        const cs = cases.map((cos) =>{
-            switch(cos.type){
-                case 'Standardowa': {
-                    const st = new Case(
-                        cos._id,
-                        cos.name,
-                        cos.price,
-                        new SL(cos.items),
-                        cos.image,
-                        cos.items
-                    );
-                    return {
-                        id: st.id,
-                        name: st.nazwa,
-                        price: st.cena,
-                        type: 'Standardowa',
-                        image: st.zdjecie,
-                        items: st.items,
-                    }
-                }
-                case "Premium": {
-                    const st = new PremiumCase(
-                        cos._id,
-                        cos.name,
-                        cos.price,
-                        new PSL(cos.items),
-                        cos.image,
-                        cos.items,
-                        cos.bonus
-                    );
-                    return {
-                        id: st.id,
-                        name: st.nazwa,
-                        price: st.cena,
-                        type: 'Premium',
-                        image: st.zdjecie,
-                        items: st.items,
-                        bonus: st.bonus
-                    }
-                }
-                case "Eventowa": {
-                    const st = new EventCase(
-                        cos._id,
-                        cos.name,
-                        cos.price,
-                        new SL(cos.items),
-                        cos.image,
-                        cos.items,
-                        cos.event
-                    );
-                    return {
-                        id: st.id,
-                        name: st.nazwa,
-                        price: st.cena,
-                        type: 'Eventowa',
-                        image: st.zdjecie,
-                        items: st.items,
-                        bonus: st.event
-                    }
-                }
-            }
-        })
-        return cs;
+        return Promise.all(
+            cases.map(async (cos) => {
+                const resolvedItems = await this.resolveItems(cos.items);
+
+                return {
+                    id: cos._id,
+                    name: cos.name,
+                    price: cos.price,
+                    type: cos.type,
+                    image: cos.image,
+                    items: resolvedItems,
+                    bonus: cos.bonus,
+                    event: cos.event
+                };
+            })
+        );
     }
+
 
     async oneCase(id) {
         const cos = await DbCases.findById(id);
+        if (!cos) return null;
 
-        if (!cos) {
-            return null;
-        }
-
-        if (cos.type === 'Standardowa') {
-            const st = new Case(
-                cos._id,
-                cos.name,
-                cos.price,
-                new SL(cos.items),
-                cos.image,
-                cos.items
-            );
-            return {
-                id: st.id,
-                name: st.nazwa,
-                price: st.cena,
-                type: 'Standardowa',
-                image: st.zdjecie,
-                items: st.items,
-            };
-        }
-
-        if (cos.type === 'Premium') {
-            const st = new PremiumCase(
-                cos._id,
-                cos.name,
-                cos.price,
-                new PSL(cos.items),
-                cos.image,
-                cos.items,
-                cos.bonus
-            );
-            return {
-                id: st.id,
-                name: st.nazwa,
-                price: st.cena,
-                type: 'Premium',
-                image: st.zdjecie,
-                items: st.items,
-                bonus: st.bonus
-            };
-        }
-
-        const st = new EventCase(
-            cos._id,
-            cos.name,
-            cos.price,
-            new SL(cos.items),
-            cos.image,
-            cos.items,
-            cos.event
-        );
+        const resolvedItems = await this.resolveItems(cos.items);
 
         return {
-            id: st.id,
-            name: st.nazwa,
-            price: st.cena,
-            type: 'Eventowa',
-            image: st.zdjecie,
-            items: st.items,
-            event: st.event
+            id: cos._id,
+            name: cos.name,
+            price: cos.price,
+            type: cos.type,
+            image: cos.image,
+            items: resolvedItems,
+            bonus: cos.bonus,
+            event: cos.event
         };
     }
-
-
-
 }
 
 module.exports = CaseService;

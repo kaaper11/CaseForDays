@@ -1,180 +1,203 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
+const CASE_IMAGES = [
+    "/tło.jpg",
+    "/case_premium.jpg",
+    "/case_event.jpg",
+];
+
+const EVENTS = ["Halloween", "Święta"];
+
 const AddCasePage = () => {
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState();
-    const [type, setType] = useState('');
-    const [image, setImage] = useState('');
+    const [name, setName] = useState("");
+    const [price, setPrice] = useState("");
+    const [type, setType] = useState("");
+    const [image, setImage] = useState("");
     const [items, setItems] = useState([]);
-    const [bonus, setBonus] = useState();
-    const [event, setEvent] = useState('');
-
-    const token = sessionStorage.getItem('token');
-    const [opis, setOpis] = useState(false);
-
     const [addedItems, setAddedItems] = useState([]);
-    const [czyjest, setCzyjest] = useState({});
-    const [error, setError] = useState('');
+    const [bonus, setBonus] = useState("");
+    const [event, setEvent] = useState("");
+    const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
 
+    const token = sessionStorage.getItem("token");
 
+    useEffect(() => {
+        const fetchItems = async () => {
+            const res = await axios.get(
+                "http://localhost:5000/items/allitems",
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            setItems(res.data || []);
+        };
+        fetchItems();
+    }, [token]);
+
+    const addItem = (item) => {
+        if (addedItems.some(i => i.id === item.id)) return;
+        setAddedItems(prev => [...prev, item]);
+    };
+
+    const removeItem = (id) => {
+        setAddedItems(prev => prev.filter(i => i.id !== id));
+    };
 
     const add = async (e) => {
         e.preventDefault();
-        if (type === 'Standardowa'){
-            addStandardCase();
-        }else if(type === 'Premium'){
-            addPremiumCase()
-        }else {
-            addEventCase();
-        }
-    }
+        setError("");
+        setSuccess(false);
 
-    const addStandardCase = async () => {
-        try {
-            await axios.post('http://localhost:5000/cases/addcasestandard', {
-                name: name,
-                price: price,
-                type: type,
-                image: image,
-                items: addedItems,
-            },{
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }})
-            setSuccess(true);
-
-        }catch(err){
-            setError(err.response?.data?.message);
-        }
-    }
-
-
-    const addPremiumCase = async () => {
-        try {
-            await axios.post('http://localhost:5000/cases/addcasepremium', {
-                name: name,
-                price: price,
-                type: type,
-                image: image,
-                items: addedItems,
-                bonus: bonus,
-            },{
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }})
-            setSuccess(true);
-
-        }catch(err){
-            setError(err.response?.data?.message);
-        }
-    }
-
-    const addEventCase = async () => {
-
-        try {
-            await axios.post('http://localhost:5000/cases/addcaseevent', {
-                name: name,
-                price: price,
-                type: type,
-                image: image,
-                items: addedItems,
-                event: event,
-            },{
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }})
-
-            setSuccess(true);
-
-        }catch(err){
-            setError(err.response?.data?.message);
-        }
-    }
-
-    const addItem = (item, index) => {
-
-        if (addedItems.some(itema => itema.id === item.id)){
-            alert("Już dodałeś ten przedmiot!")
+        if (!name || !price || !type || !image) {
+            setError("Uzupełnij wszystkie wymagane pola");
             return;
         }
-        setAddedItems([...addedItems, item])
-        setCzyjest(prev => ({
-            ...prev,
-            [index] : prev[index]= true,
-        }))
-    }
 
-    const allItems = async () => {
+        if (addedItems.length === 0) {
+            setError("Dodaj przynajmniej jeden przedmiot");
+            return;
+        }
+
+        if (type === "Eventowa" && !event) {
+            setError("Wybierz wydarzenie");
+            return;
+        }
+
         try {
-        if (token) {
-            const response = await axios.get('http://localhost:5000/items/allitems', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            setItems(response.data);
+            const payload = {
+                name,
+                price: Number(price),
+                type,
+                image,
+                items: addedItems.map(i => i.id),
+            };
 
-        }
-        } catch (error) {
-            console.log(error)
-        }
-    }
+            if (type === "Premium") payload.bonus = Number(bonus);
+            if (type === "Eventowa") payload.event = event;
 
-    useEffect(() => {
-        allItems()
-    },[addedItems])
+            const endpoint =
+                type === "Standardowa"
+                    ? "addcasestandard"
+                    : type === "Premium"
+                        ? "addcasepremium"
+                        : "addcaseevent";
+
+            await axios.post(
+                `http://localhost:5000/cases/${endpoint}`,
+                payload,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            setSuccess(true);
+            setName("");
+            setPrice("");
+            setType("");
+            setImage("");
+            setAddedItems([]);
+            setBonus("");
+            setEvent("");
+        } catch (err) {
+            setError(err.response?.data?.message || "Błąd dodawania skrzynki");
+        }
+    };
 
     return (
-        <div className={'flex flex-col items-center py-5'}>
-            <h1>Dodaj nową skrzynkę</h1>
-            <form className={'flex flex-col gap-5 py-5 border-3 w-200 items-center rounded-lg border-cyan-800 shadow-2xl'}>
-                <input value={name} onChange={(e) => setName(e.target.value)} className={'w-70'} placeholder={'Nazwa skrzynki'}/>
-                <input value={price} onChange={(e) => setPrice(e.target.value)} type='number' className={'w-70'} placeholder={'Cena'}/>
-                <select value={type} onChange={(e) => setType(e.target.value)} className={'w-50'}>
-                    <option>Typ</option>
+        <div className="flex flex-col items-center py-5">
+            <h1 className="text-2xl font-bold">Dodaj nową skrzynkę</h1>
+
+            <form
+                onSubmit={add}
+                className="flex flex-col gap-4 py-5 w-200 items-center rounded-lg border-2 border-cyan-800"
+            >
+                <input
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Nazwa skrzynki"
+                />
+
+                <input
+                    type="number"
+                    value={price}
+                    onChange={e => setPrice(e.target.value)}
+                    placeholder="Cena"
+                />
+
+                <select value={type} onChange={e => setType(e.target.value)}>
+                    <option value="">Typ</option>
                     <option>Standardowa</option>
                     <option>Premium</option>
                     <option>Eventowa</option>
                 </select>
+
                 {type === "Premium" && (
-                    <div className={'flex flex-col gap-5 p-5 border-cyan-800 border-3 shadow-2xl rounded-md'}>
-                        <input value={bonus} onChange={(e) => setBonus(e.target.value)} placeholder={'Ilość bonusu'} type={"number"}/>
-                    </div>
-                    )}
+                    <input
+                        type="number"
+                        value={bonus}
+                        onChange={e => setBonus(e.target.value)}
+                        placeholder="Bonus"
+                    />
+                )}
+
                 {type === "Eventowa" && (
-                    <div className={'flex flex-col gap-5 p-5 border-cyan-800 border-3 shadow-2xl rounded-md'}>
-                        <input value={event} onChange={(e) => setEvent(e.target.value)} placeholder={'Określ wydarzenie'} type={"text"}/>
-                    </div>
-                    )}
-                <input value={image} onChange={(e) => setImage(e.target.value)} type={'file'}/>
-                <button onClick={add}  className={'w-45 border-3 border-cyan-800 text-center rounded-md hover:bg-cyan-800 text-white cursor-pointer font-bold '}>Dodaj skrzynkę</button>
-                {success && (<success>Dodano skrzynkę</success>)}
-                {error && (<error>{error}</error>)}
+                    <select value={event} onChange={e => setEvent(e.target.value)}>
+                        <option value="">Wybierz wydarzenie</option>
+                        {EVENTS.map(ev => (
+                            <option key={ev} value={ev}>{ev}</option>
+                        ))}
+                    </select>
+                )}
+
+                <select value={image} onChange={e => setImage(e.target.value)}>
+                    <option value="">Wybierz obraz</option>
+                    {CASE_IMAGES.map(img => (
+                        <option key={img} value={img}>{img}</option>
+                    ))}
+                </select>
+
+                <button type="submit">Dodaj skrzynkę</button>
+
+                {error && <p className="text-red-500">{error}</p>}
+                {success && <p className="text-green-500">Skrzynka dodana </p>}
             </form>
-            <div className="grid grid-cols-5 gap-5 py-10">
-                {items.map((item, index) => (
-                    <div onMouseEnter={() => setOpis(true)} onMouseLeave={() => setOpis(false)}
-                         className={`${czyjest[index] ? 'skin w-60 h-80 flex items-center justify-center text-center flex-col gap-0  border-3 cursor-pointer hover:shadow-2xl rounded-md border-green-700' : 'skin w-60 h-80 flex items-center justify-center text-center flex-col gap-0  border-3 cursor-pointer hover:shadow-2xl rounded-md border-cyan-800' }`}>
-                        <img src={item.image.split('\\').pop()}/>
-                        <div className={`${czyjest[index] ? 'flex w-60 h-35 flex-col border-1 border-green-700' : 'flex w-60 h-35 flex-col border-1 border-cyan-800'}`}>
-                            <d className = {'text-lg font-bold text-white'}>{item.weaponType} {item.name}</d>
-                            <d className = {'text-lg font-bold text-white'}>{item.cena} zł</d>
-                        </div>
-                        {opis && (
-                            <div className={'tooltip'}>
-                                {item.opis}
-                            </div>
-                        )}
-                        <div className={`${czyjest[index] ? 'flex w-60 h-35 items-center justify-center border-1 border-green-700' : 'flex w-60 h-35 items-center justify-center border-1 border-cyan-800'}`}>
-                            <button onClick={() => addItem(item, index)}>Dodaj</button>
-                        </div>
+
+            <h2 className="text-xl mt-10">Dostępne przedmioty</h2>
+
+            <div className="grid grid-cols-5 gap-5 py-5">
+                {items.map(item => (
+                    <div
+                        key={item.id}
+                        className="w-60 h-80 border-2 border-cyan-800 rounded-md flex flex-col items-center justify-between p-2"
+                    >
+                        <img
+                            src={item.image}
+                            alt={item.name}
+                            className="h-32 object-contain"
+                        />
+                        <p>{item.weaponType} {item.name}</p>
+                        <p>{item.price} zł</p>
+                        <button onClick={() => addItem(item)}>Dodaj</button>
                     </div>
                 ))}
             </div>
 
+            {addedItems.length > 0 && (
+                <>
+                    <h2 className="text-xl mt-10">Dodane przedmioty</h2>
+                    <div className="flex flex-wrap gap-3 py-5">
+                        {addedItems.map(item => (
+                            <div
+                                key={item.id}
+                                className="border-2 border-green-600 px-3 py-2 rounded flex gap-2 items-center"
+                            >
+                                <span>{item.name}</span>
+                                <button onClick={() => removeItem(item.id)}>✖</button>
+                            </div>
+                        ))}
+                    </div>
+                </>
+            )}
         </div>
-    )
-}
+    );
+};
+
 export default AddCasePage;

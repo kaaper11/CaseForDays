@@ -1,6 +1,3 @@
-// =======================
-// PRZEDMIOTY (ITEMS)
-// =======================
 export function filterItems(items, filters) {
   let result = [...items];
 
@@ -43,9 +40,6 @@ export function filterItems(items, filters) {
 }
 
 
-// =======================
-// SKRZYNKI (CASES)
-// =======================
 export function filterCases(cases, filters) {
   let result = [...cases];
 
@@ -55,7 +49,6 @@ export function filterCases(cases, filters) {
         !c.name?.toLowerCase().includes(filters.name.toLowerCase().trim())
     ) return false;
 
-    // 🔥 FILTRUJEMY PO TYPE
     if (
         filters.type &&
         c.type?.toLowerCase().trim() !== filters.type.toLowerCase().trim()

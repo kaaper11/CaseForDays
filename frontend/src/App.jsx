@@ -15,6 +15,7 @@ import ProfilePage from "./view/ProfilePage.jsx";
 import AddBalancePage from "./view/AddBalancePage.jsx";
 import PaymentSimulationPage from "./view/PaymentSimulationPage.jsx";
 import SearchPage from "./view/SearchPage.jsx";
+import EventCasePage from "./view/EventCasePage";
 
 function Lay() {
     const location = useLocation();
@@ -37,6 +38,7 @@ function Lay() {
                 <Route path="/AddBalancePage" element={<AddBalancePage />} />
                 <Route path="/PaymentSimulationPage" element={<PaymentSimulationPage />} />
                 <Route path="/SearchPage" element={<SearchPage />} />
+                <Route path="/EventCasePage" element={<EventCasePage />} />
             </Routes>
         </div>
     );

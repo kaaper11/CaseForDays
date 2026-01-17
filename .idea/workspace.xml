@@ -5,49 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4251ee9e-4c1e-4fb8-b5a0-ccb87ded52b4" name="Changes" comment="Dodanie strony wyświtlania skrzynek pobieranych z bazy, dodanie szkicu strony do otwierania skrzynek.">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/DbModels/Cases.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/DbModels/Cases.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/DbModels/Items.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/DbModels/Items.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/controllers/CaseController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controllers/CaseController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/controllers/ItemController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controllers/ItemController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/controllers/UserController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controllers/UserController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/middlewares/authMiddleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/middlewares/authMiddleware.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/middlewares/multer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/models/case/EventCase.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/models/case/EventCase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/models/user/PremiumUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/models/user/PremiumUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/models/user/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/models/user/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/routes/caseRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/routes/caseRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/routes/itemRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/routes/itemRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/routes/userRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/routes/userRoute.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/services/CaseService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/services/CaseService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/services/UserService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/services/UserService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/strategies/PremiumStrategiaLosowania.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/strategies/PremiumStrategiaLosowania.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767545256749-558844470.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767545280016-539663227.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767546503802-523970463.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767546628345-569686310.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767546759065-92012235.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767546907010-116193835.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767546924336-691935746.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767608815538-145996313.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767608845963-653662543.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767609932138-87727890.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767609942117-133241855.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767609967483-428275389.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767612060545-241946994.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767612115713-644804400.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/uploads/1767612133981-628297236.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/openCase.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/openCase.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/SearchPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/SearchPage.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/view/AddCasePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/view/AddCasePage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/view/AddItemPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/view/AddItemPage.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/view/CasesPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/view/CasesPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/view/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/view/LoginPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/view/FilterUtils.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/view/FilterUtils.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/view/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/view/Navbar.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/view/OpenCasePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/view/OpenCasePage.jsx" afterDir="false" />
     </list>
@@ -156,7 +121,9 @@
       <workItem from="1767538598180" duration="277000" />
       <workItem from="1767538891262" duration="227000" />
       <workItem from="1767539267169" duration="10154000" />
-      <workItem from="1767784380852" duration="12689000" />
+      <workItem from="1767784380852" duration="12908000" />
+      <workItem from="1767899635709" duration="5821000" />
+      <workItem from="1768665675013" duration="6298000" />
     </task>
     <servers />
   </component>

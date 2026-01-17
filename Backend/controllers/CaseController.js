@@ -4,67 +4,92 @@ class CaseController {
     }
 
     addCaseStandard = async (req, res) => {
-        const { name, price, type, image, items } = req.body;
+        const { name, price, image, items } = req.body;
 
         try {
-           if (!name || !price || !type || !image || !items) {
-               return res.status(400).json({message:"Uzupełnij pola pls"});
-           }
-           const dalej = await this.caseService.addCaseStandard({name, price, type, image, items});
+            if (!name || !price || !image || !Array.isArray(items) || items.length === 0) {
+                return res.status(400).json({ message: "Uzupełnij pola pls" });
+            }
 
-            return res.status(200).json({ message: dalej.message });
-        }catch(err){
-            return res.status(500).json({message: 'Błąd: ' + err});
+            const dalej = await this.caseService.addCaseStandard({
+                name,
+                price,
+                image,
+                items,
+                type: "Standardowa"
+            });
+
+            return res.status(200).json({ message: "OK" });
+        } catch (err) {
+            return res.status(500).json({ message: "Błąd: " + err.message });
         }
-    }
+    };
 
     addCasePremium = async (req, res) => {
-        const { name, price, type, image, items, bonus } = req.body;
+        const { name, price, image, items, bonus } = req.body;
 
         try {
-            if (!name || !price || !type || !image || !items || !bonus) {
-                return res.status(400).json({message:"Uzupełnij pola pls"});
+            if (!name || !price || !image || !bonus || !Array.isArray(items) || items.length === 0) {
+                return res.status(400).json({ message: "Uzupełnij pola pls" });
             }
-            const dalej = await this.caseService.addCasePremium({name, price, type, image, items, bonus});
-            return res.status(200).json({ message: dalej.message });
-        }catch(err){
-            return res.status(500).json({message: 'Błąd: ' + err});
+
+            const dalej = await this.caseService.addCasePremium({
+                name,
+                price,
+                image,
+                items,
+                bonus,
+                type: "Premium"
+            });
+
+            return res.status(200).json({ message: "OK" });
+        } catch (err) {
+            return res.status(500).json({ message: "Błąd: " + err.message });
         }
-    }
+    };
 
     addCaseEvent = async (req, res) => {
-        const { name, price, type, image, items, event } = req.body;
+        const { name, price, image, items, event } = req.body;
 
         try {
-            if (!name || !price || !type || !image || !items || !event) {
-
-                return res.status(400).json({message:"Uzupełnij pola pls"});
+            if (
+                !name ||
+                !price ||
+                !image ||
+                !event ||
+                !Array.isArray(items) ||
+                items.length === 0
+            ) {
+                return res.status(400).json({ message: "Uzupełnij pola pls" });
             }
 
-            const dalej = await this.caseService.addCaseEvent({name, price, type, image, items, event});
-            return res.status(200).json({ message: dalej.message });
-        }catch(err){
-            return res.status(500).json({message: 'Błąd: ' + err});
+            const dalej = await this.caseService.addCaseEvent({
+                name,
+                price,
+                image,
+                items,
+                event,
+                type: "Eventowa"
+            });
+
+            return res.status(200).json({ message: "OK" });
+        } catch (err) {
+            return res.status(500).json({ message: "Błąd: " + err.message });
         }
-    }
+    };
 
     allCases = async (req, res) => {
         try {
             const cases = await this.caseService.allCases();
             return res.status(200).json(cases);
         } catch (err) {
-            console.log(err);
-            return res.status(500).json({
-                message: "Błąd pobierania skrzynek",
-                error: err.message
-            });
+            return res.status(500).json({ message: "Błąd pobierania skrzynek" });
         }
     };
 
     oneCase = async (req, res) => {
         try {
             const { id } = req.params;
-
             const oneCase = await this.caseService.oneCase(id);
 
             if (!oneCase) {
@@ -72,49 +97,31 @@ class CaseController {
             }
 
             return res.status(200).json(oneCase);
-
         } catch (err) {
-            return res.status(500).json({
-                message: "Błąd pobierania skrzynki",
-                error: err.message
-            });
+            return res.status(500).json({ message: "Błąd pobierania skrzynki" });
         }
-    }
+    };
 
     openCase = async (req, res) => {
         try {
             const { id } = req.params;
-
             const caseData = await this.caseService.oneCase(id);
 
-            if (!caseData) {
-                return res.status(404).json({ message: "Skrzynka nie istnieje" });
-            }
-
-            const items = caseData.items;
-
-            if (!items || items.length === 0) {
+            if (!caseData || !Array.isArray(caseData.items) || caseData.items.length === 0) {
                 return res.status(400).json({ message: "Skrzynka nie ma przedmiotów" });
             }
 
-            const randomIndex = Math.floor(Math.random() * items.length);
-            const wonItem = items[randomIndex];
+            const randomIndex = Math.floor(Math.random() * caseData.items.length);
+            const wonItem = caseData.items[randomIndex];
 
             return res.status(200).json({
-                items,
+                items: caseData.items,
                 wonItem
             });
-
         } catch (err) {
-            console.error(err);
-            return res.status(500).json({
-                message: "Błąd otwierania skrzynki",
-                error: err.message
-            });
+            return res.status(500).json({ message: "Błąd otwierania skrzynki" });
         }
     };
-
-
 }
 
 module.exports = CaseController;
